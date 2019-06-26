@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Users page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+       
+        <table id="table">
+            <tr><th>Name</th>
+            <th>Username</th>
+            <th>Email</th></tr>
+        </table>
+            
+            <input type="button" onclick="getusers()" value="Get users" />
+              
+            <script>
+    function getusers()  
+    {
+var url = "https://jsonplaceholder.typicode.com/users";
+ 
+
+var req = new XMLHttpRequest();
+req.onload = function() {
+	generateHTMLTable(req.response);
+}
+req.open("GET",url);
+req.send();
+    }
+
+function generateHTMLTable(data) {
+	var str = "";
+	for(var row=0; row<data.length; row++) {
+		str += "<tr>"; 
+		for(var col=0; col<data[row].length; col++)
+			str += "<td>" + data[row][col].name + "</td>";
+                        str += "<td>" + data[row][col].username + "</td>";
+                        str += "<td>" + data[row][col].email + "</td>";
+		str += "</tr>";
+	}
+	
+	
+	var table = document.getElementById("table");
+	table.innerHTML = str;
+}</script>
+              
+         
+    </body>
+</html>

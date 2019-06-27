@@ -7,49 +7,61 @@ and open the template in the editor.
 <html>
     <head>
         <title>Users page</title>
+         <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
+         <link href="Assets/style.css" rel="stylesheet" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-       
-        <table id="table">
-            <tr><th>Name</th>
-            <th>Username</th>
-            <th>Email</th></tr>
-        </table>
-            
-            <input type="button" onclick="getusers()" value="Get users" />
-              
-            <script>
-    function getusers()  
-    {
-var url = "https://jsonplaceholder.typicode.com/users";
- 
-
-var req = new XMLHttpRequest();
-req.onload = function() {
-	generateHTMLTable(req.response);
+        <div id="root"></div>
+         <table id="table"></table>
+<!--        <script>
+    var table="<table>";
+    table+="<tr><th>Name</th><th>Username</th><th>Email</th></tr>"; 
+    var request = new XMLHttpRequest();
+    request.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+    request.send();
+    request.onload = function() {
+  // Begin accessing JSON data here
+  var data = JSON.parse(this.response);
+  if (request.status >= 200 && request.status < 400) {
+    data.forEach(users => {
+	table+="<tr><td>"+users.value.id+"</td><td>"+users.value.username+" <a href=https://jsonplaceholder.typicode.com/users/"+users.value.id+"></a></td><td>"+users.value.email+"</td></tr>";
+    }) 
+  } 
 }
-req.open("GET",url);
-req.send();
-    }
-
-function generateHTMLTable(data) {
+    table+="</table>";
+    document.getElementById('root').innerHTML = ""+table+"";
+        </script>
+        -->
+        <script>
+            var url = "https://jsonplaceholder.typicode.com/users";
+ 
+            // send AJAX request
+            var req = new XMLHttpRequest();
+            req.onload = function() {
+                    generateHTMLTable(req.response);
+            }
+            req.open("GET",url);
+            req.send(); 
+            
+        function generateHTMLTable(data) {
 	var str = "";
 	for(var row=0; row<data.length; row++) {
-		str += "<tr>"; 
+		str += "<tr>"; // open HTML row
 		for(var col=0; col<data[row].length; col++)
-			str += "<td>" + data[row][col].name + "</td>";
-                        str += "<td>" + data[row][col].username + "</td>";
-                        str += "<td>" + data[row][col].email + "</td>";
-		str += "</tr>";
+		    str += "<td>" + data[row][col].name + "</td>";
+                    str += "<td>" + data[row][col].username + "</td>";
+                    str += "<td>" + data[row][col].email + "</td>";
+		    str += "</tr>"; // close HTML row
 	}
 	
-	
+	// assumes the table element has id "table":
+	// <table id="table"></table>
 	var table = document.getElementById("table");
 	table.innerHTML = str;
-}</script>
-              
-         
+}  
+        </script>
+    
     </body>
 </html>

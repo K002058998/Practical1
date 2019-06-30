@@ -55,7 +55,7 @@
                   }
               }
               
-             //create form
+             //create table
              function createTable(data,id)
              {
                 var str = "";
@@ -64,7 +64,7 @@
                              if(data[row].id==id) 
                              {
                                  var suite=data[row].address.suite.toString();
-                                 //creates form
+                                 //creates table
                           str+="<tr><td><label>Name:</label></td><td>"+data[row].name+"</td></tr>";
                           str+="<tr><td><label>Username:</label></td><td>"+data[row].username+"</td></tr>";
                           str+="<tr><td><label>Email:</label></td><td>"+data[row].email+"</td></tr>";

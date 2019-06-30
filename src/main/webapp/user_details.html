@@ -10,8 +10,8 @@
       
         <h1>User details</h1>
         
-        <form id="user_details">
-        </form>      
+        <table id="user_details">
+        </table>      
         <br>
         <br>
         
@@ -51,12 +51,12 @@
                   var users=JSON.parse(req.response);
                   if(users!=null)
                   {
-                    createForm(users,id);
+                    createTable(users,id);
                   }
               }
               
              //create form
-             function createForm(data,id)
+             function createTable(data,id)
              {
                 var str = "";
                 for(var row=0; row<data.length; row++) {
@@ -65,18 +65,18 @@
                              {
                                  var suite=data[row].address.suite.toString();
                                  //creates form
-                          str+="<table><tr><td><label>Name</label></td><td><input type=text value="+data[row].name+" readonly=true/></td></tr>";
-                          str+="<tr><td><label>Username</label></td><td><input type=text value="+data[row].username+" readonly=true/></td></tr>";
-                          str+="<tr><td><label>Email</label></td><td><input type=text value="+data[row].email+" readonly=true/></td></tr>";
-                          str+="<tr><td><label>Phone</label></td><td><input type=text value="+data[row].phone+" readonly=true/></td></tr>";
-                          str+="<tr><td><label>Street</label></td><td><input type=text value="+data[row].address.street+" readonly=true/></td></tr>";
-                          str+="<tr><td><label>City</label></td><td><input type=text value="+data[row].address.city+" readonly=true/></td></tr>";
-                          str+="<tr><td><label>Suite</label></td><td><input type=text value="+suite+" readonly=true/></td></tr>";
-                          str+="</table>"; 
+                          str+="<tr><td><label>Name:</label></td><td>"+data[row].name+"</td></tr>";
+                          str+="<tr><td><label>Username:</label></td><td>"+data[row].username+"</td></tr>";
+                          str+="<tr><td><label>Email:</label></td><td>"+data[row].email+"</td></tr>";
+                          str+="<tr><td><label>Phone:</label></td><td>"+data[row].phone+"</td></tr>";
+                          str+="<tr><td><label>Street:</label></td><td>"+data[row].address.street+"</td></tr>";
+                          str+="<tr><td><label>City:</label></td><td>"+data[row].address.city+"</td></tr>";
+                          str+="<tr><td><label>Suite:</label></td><td>"+suite+"</td></tr>";
+                         
                              }
                 }
-	       var form = document.getElementById("user_details");
-	       form.innerHTML = str;
+	       var table = document.getElementById("user_details");
+	       table.innerHTML = str;
              }
          
   </script>

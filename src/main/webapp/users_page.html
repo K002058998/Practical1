@@ -1,48 +1,47 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>Users page</title>
-         <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
-         <link href="Assets/style.css" rel="stylesheet" />
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="Assets/style.css" rel="stylesheet" />
+        <title>All users</title>
     </head>
     <body>
-        
-        <table id="table">
-            <tr><th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-            </tr>
+        <div id="maincontent"></div>
+        <h1> All Users</h1>
+           <table id="table">
         </table>
         
         <script>
             var url = "https://jsonplaceholder.typicode.com/users";
- 
             // send AJAX request
             var req = new XMLHttpRequest();
             req.open("GET",url);
             //send request
             req.send(); 
+            
+            var main = document.getElementById("maincontent");
+	
             //create table when response is returned
             req.onload = function() {
+                  var users=JSON.parse(req.response);
+                  if(users!=null)
+                  {
+                    generateHTMLTable(users);
+                  }
+                  
+                  else
+                  {
+                     main.innerHTML = "Not working";
+                  }
                 
-                    generateHTMLTable(req.response);
-            }
+                }
             
         function generateHTMLTable(data) {
-	var str = "";
+	var str = " <tr><th>Name</th><th>Username</th><th>Email</th>";
 	for(var row=0; row<data.length; row++) {
-		str += "<tr>"; // create row
-		for(var col=0; col<data[row].length; col++)
-		     str += "<td>" + data[row][col].name + "</td>";
-                    str += "<td>" + data[row][col].username + "</td><a href=https://jsonplaceholder.typicode.com/users/"+data[row][col].id+"></a>";
-                    str += "<td>" + data[row][col].email + "</td>";
+		     str += "<tr>"; // create row
+		     str += "<td>" + data[row].name + "</td>";
+                    str += "<td><a href=user_details.html?user_id="+data[row].id+">"+data[row].username + "</a></td>";
+                    str += "<td>" + data[row].email + "</td>";
 		    str += "</tr>"; // 
 	}
 	

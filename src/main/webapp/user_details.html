@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <link href="Assets/style.css" rel="stylesheet" />
+        <title>User details</title>
+    </head>
+    <body>
+      
+        <h1>User details</h1>
+        
+        <form id="user_details">
+        </form>      
+        <br>
+        <br>
+        
+        <a href="users_page.html">Back</a>
+        
+        <script>
+         
+           var id=getUrlParam('user_id','0');
+         
+           //returns value of url paramenter value i.e user_id=3
+            function getUrlParam(parameter, defaultvalue){
+                var urlparameter = defaultvalue;
+                if(window.location.href.indexOf(parameter) > -1){
+                    urlparameter = getUrlVars()[parameter];
+                    }
+                return urlparameter;
+            }
+            
+            //gets url variables i.e http://localhost:8080/Practical1/user_details.html?user_id=3
+            function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                vars[key] = value;
+            });
+            return vars;
+             }
+              
+              //makes request to api
+            var url = "https://jsonplaceholder.typicode.com/users";
+            // send AJAX request
+            var req = new XMLHttpRequest();
+            req.open("GET",url);
+            //send request
+            req.send(); 
+                       
+            req.onload = function() {
+                  var users=JSON.parse(req.response);
+                  if(users!=null)
+                  {
+                    createForm(users,id);
+                  }
+              }
+              
+             //create form
+             function createForm(data,id)
+             {
+                var str = "";
+                for(var row=0; row<data.length; row++) {
+                    //checks if user_id parameter is equal to users id
+                             if(data[row].id==id) 
+                             {
+                                 var suite=data[row].address.suite.toString();
+                                 //creates form
+                          str+="<table><tr><td><label>Name</label></td><td><input type=text value="+data[row].name+" readonly=true/></td></tr>";
+                          str+="<tr><td><label>Username</label></td><td><input type=text value="+data[row].username+" readonly=true/></td></tr>";
+                          str+="<tr><td><label>Email</label></td><td><input type=text value="+data[row].email+" readonly=true/></td></tr>";
+                          str+="<tr><td><label>Phone</label></td><td><input type=text value="+data[row].phone+" readonly=true/></td></tr>";
+                          str+="<tr><td><label>Street</label></td><td><input type=text value="+data[row].address.street+" readonly=true/></td></tr>";
+                          str+="<tr><td><label>City</label></td><td><input type=text value="+data[row].address.city+" readonly=true/></td></tr>";
+                          str+="<tr><td><label>Suite</label></td><td><input type=text value="+suite+" readonly=true/></td></tr>";
+                          str+="</table>"; 
+                             }
+                }
+	       var form = document.getElementById("user_details");
+	       form.innerHTML = str;
+             }
+         
+  </script>
+       
+    </body>
+</html>
+
